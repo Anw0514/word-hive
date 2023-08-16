@@ -1,4 +1,5 @@
 import { ThemeProvider, styled } from "styled-components";
+import HexesContainer from "./components/HexesContainer";
 
 const theme = {
   dark: "#140001",
@@ -15,13 +16,16 @@ const StyledApp = styled.div`
   background-color: ${props => props.theme.dark};
   color: ${props => props.theme.primary};
   min-height: 100vh;
+  margin: auto;
+	--wrp: 75vw;
+	width: var(--wrp);
 `
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        Hello World
+        <HexesContainer />
       </StyledApp>
     </ThemeProvider>
   );
