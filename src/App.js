@@ -1,5 +1,9 @@
 import { ThemeProvider, styled } from "styled-components";
 import HexesContainer from "./components/HexesContainer";
+import ScoreContainer from "./components/ScoreContainer";
+import WordBar from "./components/WordBar";
+import SubmitButton from "./components/SubmitButton";
+import Heading from "./components/Heading";
 
 const theme = {
   dark: "#140001",
@@ -17,15 +21,35 @@ const StyledApp = styled.div`
   color: ${props => props.theme.primary};
   min-height: 100vh;
   margin: auto;
-	--wrp: 75vw;
-	width: var(--wrp);
+	width: 100%;
+`
+
+const StyledFlexContainer = styled.div`
+  display: flex;
+  min-width: 100%
+`
+
+const StyledControls = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
 `
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        <HexesContainer />
+        <StyledFlexContainer>
+          <HexesContainer />
+          <StyledControls>
+            <Heading />
+            <ScoreContainer />
+            <WordBar />
+            <SubmitButton />
+          </StyledControls>
+        </StyledFlexContainer>
       </StyledApp>
     </ThemeProvider>
   );

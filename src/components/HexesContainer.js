@@ -8,7 +8,7 @@ const StyledHexesContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
 `
 export default function HexesContainer() {
     const [grid, setGrid] = useState(generateGridArray())
