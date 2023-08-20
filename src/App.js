@@ -4,7 +4,9 @@ import ScoreContainer from "./components/ScoreContainer";
 import WordBar from "./components/WordBar";
 import SubmitButton from "./components/SubmitButton";
 import Heading from "./components/Heading";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateIsHorizontal } from "./redux/appSlice";
 
 const theme = {
   dark: "#140001",
@@ -28,7 +30,7 @@ const StyledApp = styled.div`
 const StyledFlexContainer = styled.div`
   display: flex;
   min-width: 100%;
-  flex-direction: ${props => props.isHorizontal ? 'row' : 'column'};
+  flex-direction: ${props => props.horizontal ? 'row' : 'column'};
   justify-content: center;
 `
 
@@ -42,24 +44,23 @@ const StyledControls = styled.div`
 `
 
 function App() {
-  const [isHorizontal, setIsHorizontal] = useState(false)
+  const dispatch = useDispatch()
+  const isHorizontal = useSelector(state => state.app.isHorizontal)
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsHorizontal(window.innerHeight < window.innerWidth)
-    }
+    const handleResize = () => dispatch(updateIsHorizontal())
     window.addEventListener('resize', handleResize)
     handleResize()
   
     return () => {
       window.removeEventListener('resize', handleResize)
     };
-  }, [setIsHorizontal])
+  }, [dispatch])
 
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        <StyledFlexContainer isHorizontal={isHorizontal}>
+        <StyledFlexContainer horizontal={isHorizontal}>
           { !isHorizontal && <Heading /> }
           { !isHorizontal && <ScoreContainer /> }
           <HexesContainer />

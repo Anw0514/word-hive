@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 const StyledHex = styled.div`
@@ -15,7 +16,7 @@ const StyledHex = styled.div`
 	margin: var(--g) calc(var(--r) / -2 * var(--w) + var(--g));
 	position: relative;
     text-align: center;
-    font-size: 11vw;
+    font-size: ${props => props.horizontal ? '5.5vw' : '11vw'};
     line-height: 1.45em;
 
 	&:hover {
@@ -40,8 +41,9 @@ const StyledHex = styled.div`
 `
 
 export default function Hex({ letterObj }) {
+    const isHorizontal = useSelector(state => state.app.isHorizontal)
 
     return (
-        <StyledHex shown={!!letterObj.letter}>{letterObj.letter}</StyledHex>
+        <StyledHex shown={!!letterObj.letter} horizontal={isHorizontal}>{letterObj.letter}</StyledHex>
     )
 }

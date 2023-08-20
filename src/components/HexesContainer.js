@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { generateGridArray } from '../utils/gridHelpers'
 import Hex from './Hex'
+import { useSelector } from 'react-redux'
 
 const StyledHexesContainer = styled.div`
 	margin: 0 -1px;
@@ -11,7 +11,7 @@ const StyledHexesContainer = styled.div`
 	justify-content: center;
 `
 export default function HexesContainer() {
-    const [grid, setGrid] = useState(generateGridArray())
+    const grid = useSelector(state => state.word.letters)
 
     return (
         <StyledHexesContainer>
