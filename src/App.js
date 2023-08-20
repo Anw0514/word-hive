@@ -4,6 +4,7 @@ import ScoreContainer from "./components/ScoreContainer";
 import WordBar from "./components/WordBar";
 import SubmitButton from "./components/SubmitButton";
 import Heading from "./components/Heading";
+import { useEffect, useState } from "react";
 
 const theme = {
   dark: "#140001",
@@ -26,7 +27,9 @@ const StyledApp = styled.div`
 
 const StyledFlexContainer = styled.div`
   display: flex;
-  min-width: 100%
+  min-width: 100%;
+  flex-direction: ${props => props.isHorizontal ? 'row' : 'column'};
+  justify-content: center;
 `
 
 const StyledControls = styled.div`
@@ -35,20 +38,41 @@ const StyledControls = styled.div`
   justify-content: center;
   align-items: center;
   padding: 100px;
+  min-width: 30vw;
 `
 
 function App() {
+  const [isHorizontal, setIsHorizontal] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsHorizontal(window.innerHeight < window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize()
+  
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    };
+  }, [setIsHorizontal])
+
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        <StyledFlexContainer>
+        <StyledFlexContainer isHorizontal={isHorizontal}>
+          { !isHorizontal && <Heading /> }
+          { !isHorizontal && <ScoreContainer /> }
           <HexesContainer />
-          <StyledControls>
-            <Heading />
-            <ScoreContainer />
-            <WordBar />
-            <SubmitButton />
-          </StyledControls>
+          { isHorizontal &&
+            <StyledControls>
+              <Heading />
+              <ScoreContainer />
+              <WordBar />
+              <SubmitButton />
+            </StyledControls>
+          }
+          { !isHorizontal && <WordBar /> }
+          { !isHorizontal && <SubmitButton /> }
         </StyledFlexContainer>
       </StyledApp>
     </ThemeProvider>
