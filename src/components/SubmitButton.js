@@ -25,7 +25,12 @@ export default function SubmitButton() {
     const handleSubmit = () => {
         if (currentWord) {
             fetch(url + currentWord)
-                .then(resp => resp.json())
+                .then(resp => {
+                    if (resp.ok) {
+                        return resp.json()
+                    }
+                    throw resp
+                })
                 .then(res => {
                     if (res[0].word) {
                         dispatch(clearWord())

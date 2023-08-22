@@ -12,9 +12,12 @@ export const wordSlice = createSlice({
     clearWord: state => {
       state.currentWord = ''
     },
+    addLetter: (state, action) => {
+      state.currentWord += action.payload
+    }
   }
 })
 
-export const { clearWord } = wordSlice.actions
+export const { clearWord, addLetter } = wordSlice.actions
 
 export default wordSlice.reducer

@@ -1,6 +1,7 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { addLetter } from '../redux/wordSlice'
 
 const StyledHex = styled.div`
     --r: 0.24935;
@@ -18,6 +19,7 @@ const StyledHex = styled.div`
     text-align: center;
     font-size: ${props => props.horizontal ? '5.5vw' : '11vw'};
     line-height: 1.45em;
+    cursor: pointer;
 
 	&:hover {
 		z-index: 9;
@@ -41,9 +43,20 @@ const StyledHex = styled.div`
 `
 
 export default function Hex({ letterObj }) {
+    const dispatch = useDispatch()
     const isHorizontal = useSelector(state => state.app.isHorizontal)
 
+    const handleClick = () => {
+        dispatch(addLetter(letterObj.letter))
+    }
+
     return (
-        <StyledHex shown={!!letterObj.letter} horizontal={isHorizontal}>{letterObj.letter}</StyledHex>
+        <StyledHex 
+            shown={!!letterObj.letter} 
+            horizontal={isHorizontal}
+            onClick={handleClick}
+        >
+            {letterObj.letter}
+        </StyledHex>
     )
 }
