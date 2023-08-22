@@ -4,7 +4,7 @@ export const appSlice = createSlice({
   name: 'app',
   initialState: {
     isHorizontal: false,
-    // score
+    score: 0
   },
   reducers: {
     updateIsHorizontal: state => {

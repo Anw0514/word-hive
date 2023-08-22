@@ -14,6 +14,7 @@ const theme = {
   primary: "#F3C33F",
   secondary: "#564110",
   success: "#7CB441",
+  successAlt: "#6ca62e",
   warning: "#FF7247",
   failure: "#FF4747",
   info: "#009FB7"
@@ -24,7 +25,7 @@ const StyledApp = styled.div`
   color: ${props => props.theme.primary};
   min-height: 100vh;
   margin: auto;
-	width: 100%;
+  padding: 2em;
 `
 
 const StyledFlexContainer = styled.div`
@@ -32,15 +33,15 @@ const StyledFlexContainer = styled.div`
   min-width: 100%;
   flex-direction: ${props => props.horizontal ? 'row' : 'column'};
   justify-content: center;
+  text-align: center;
 `
 
 const StyledControls = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 100px;
-  min-width: 30vw;
+  min-width: 50vw;
 `
 
 function App() {
