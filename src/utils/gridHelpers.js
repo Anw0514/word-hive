@@ -1,6 +1,6 @@
 export const generateGridArray = () => {
     const arr = []
-    const alphabet = 'EARIOTNSLCUDPMHGBFYWKVXZJQ'; // in order of most common to least common
+    const alphabet = 'EEEEAAAARIIIIOOOOTNSLCUUUUDPMHGBFYWKVXZJQ'; // in order of most common to least common
     // TODO: implement mitchel's idea for weighted letters
     for (let i = 1; i < 6; i++) {
         for (let j = 1; j < 6; j++) {
@@ -12,7 +12,8 @@ export const generateGridArray = () => {
                 letter,
                 row: i,
                 column: j,
-                position: arr.length
+                position: arr.length,
+                clicked: false
             })
 
         }

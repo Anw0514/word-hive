@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { addLetter } from '../redux/wordSlice'
+import { toggleLetter } from '../redux/wordSlice'
 
 const StyledHex = styled.div`
     --r: 0.24935;
@@ -47,7 +47,7 @@ export default function Hex({ letterObj }) {
     const isHorizontal = useSelector(state => state.app.isHorizontal)
 
     const handleClick = () => {
-        dispatch(addLetter(letterObj.letter))
+        dispatch(toggleLetter(letterObj))
     }
 
     return (
