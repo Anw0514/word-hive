@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearWord } from '../redux/wordSlice'
+import { wordInvalid, wordTooShort } from '../redux/appSlice'
 
 const StyledButton = styled.button`
     background-color: ${props => props.theme.success};
@@ -23,12 +24,13 @@ export default function SubmitButton() {
     const currentWord = useSelector(state => state.word.currentWord)
 
     const handleSubmit = () => {
-        if (currentWord) {
+        if (currentWord && currentWord.length > 2) {
             fetch(url + currentWord)
                 .then(resp => {
                     if (resp.ok) {
                         return resp.json()
                     }
+                    dispatch(wordInvalid())
                     throw resp
                 })
                 .then(res => {
@@ -37,6 +39,8 @@ export default function SubmitButton() {
                     }
                 })
                 .catch(error => console.log(error))
+        } else {
+            dispatch(wordTooShort())
         }
     }
 

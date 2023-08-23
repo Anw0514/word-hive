@@ -7,6 +7,7 @@ import Heading from "./components/Heading";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsHorizontal } from "./redux/appSlice";
+import ErrorPopup from "./components/ErrorPopup";
 
 const theme = {
   dark: "#140001",
@@ -71,10 +72,12 @@ function App() {
               <ScoreContainer />
               <WordBar />
               <SubmitButton />
+              <ErrorPopup />
             </StyledControls>
           }
           { !isHorizontal && <WordBar /> }
           { !isHorizontal && <SubmitButton /> }
+          { !isHorizontal && <ErrorPopup /> }
         </StyledFlexContainer>
       </StyledApp>
     </ThemeProvider>
