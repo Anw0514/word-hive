@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import Hex from './Hex'
 import { useSelector } from 'react-redux'
+import Hex from './Hex'
 
 const StyledHexesContainer = styled.div`
 	margin: 0 -1px;

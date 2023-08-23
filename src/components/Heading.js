@@ -9,7 +9,7 @@ const StyledHeading = styled.div`
 
 export default function Heading() {
     const isHorizontal = useSelector(state => state.app.isHorizontal)
-  return (
-    <StyledHeading horizontal={isHorizontal}>Word Hive</StyledHeading>
-  )
+    return (
+        <StyledHeading horizontal={isHorizontal}>Word Hive</StyledHeading>
+    )
 }

@@ -9,7 +9,6 @@ export const wordSlice = createSlice({
     currentWordIndexes: [],
   },
   reducers: {
-    // addLetter, removeLetter, testWord?
     clearWord: state => {
       state.currentWord = ''
       state.currentWordIndexes = []

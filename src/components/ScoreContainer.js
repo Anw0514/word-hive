@@ -12,7 +12,7 @@ const StyledScoreContainer = styled.div`
 export default function ScoreContainer() {
     const score = useSelector(state => state.app.score)
     const isHorizontal = useSelector(state => state.app.isHorizontal)
-  return (
-    <StyledScoreContainer horizontal={isHorizontal}>Current Score: {score}</StyledScoreContainer>
-  )
+    return (
+        <StyledScoreContainer horizontal={isHorizontal}>Current Score: {score}</StyledScoreContainer>
+    )
 }

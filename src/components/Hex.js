@@ -1,6 +1,6 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
 import { toggleLetter } from '../redux/wordSlice'
 
 const StyledHex = styled.div`

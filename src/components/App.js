@@ -1,13 +1,13 @@
-import { ThemeProvider, styled } from "styled-components";
-import HexesContainer from "./components/HexesContainer";
-import ScoreContainer from "./components/ScoreContainer";
-import WordBar from "./components/WordBar";
-import SubmitButton from "./components/SubmitButton";
-import Heading from "./components/Heading";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsHorizontal } from "./redux/appSlice";
-import ErrorPopup from "./components/ErrorPopup";
+import { ThemeProvider, styled } from "styled-components";
+import HexesContainer from "./HexesContainer";
+import ScoreContainer from "./ScoreContainer";
+import WordBar from "./WordBar";
+import SubmitButton from "./SubmitButton";
+import Heading from "./Heading";
+import ErrorPopup from "./ErrorPopup";
+import { updateIsHorizontal } from "../redux/appSlice";
 
 const theme = {
   dark: "#140001",

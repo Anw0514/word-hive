@@ -39,6 +39,7 @@ export default function WordBar() {
     const handleClick = () => {
         dispatch(clearWord())
     }
+    
     return (
         <StyledWordBar horizontal={isHorizontal}>
             {currentWord}
