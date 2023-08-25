@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearWord } from '../redux/wordSlice'
+import { replaceLettersAndClearWord } from '../redux/wordSlice'
 import { wordInvalid, wordTooShort } from '../redux/appSlice'
 
 const StyledButton = styled.button`
@@ -35,7 +35,7 @@ export default function SubmitButton() {
                 })
                 .then(res => {
                     if (res[0].word) {
-                        dispatch(clearWord())
+                        dispatch(replaceLettersAndClearWord())
                     }
                 })
                 .catch(error => console.log(error))

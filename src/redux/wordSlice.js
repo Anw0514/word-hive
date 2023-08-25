@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { checkDistance, generateGridArray } from '../utils/gridHelpers'
+import { checkDistance, generateGridArray, randomLetter } from '../utils/gridHelpers'
 
 export const wordSlice = createSlice({
   name: 'word',
@@ -41,10 +41,19 @@ export const wordSlice = createSlice({
           }
         }
       }
+    },
+    replaceLettersAndClearWord: state => {
+      state.letters = state.letters.map(letter => ({
+        ...letter, 
+        clicked: false, 
+        letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
+      }))
+      state.currentWord = ''
+      state.currentWordIndexes = []
     }
   }
 })
 
-export const { clearWord, toggleLetter } = wordSlice.actions
+export const { clearWord, toggleLetter, replaceLettersAndClearWord } = wordSlice.actions
 
 export default wordSlice.reducer
