@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { generateGridArray } from '../utils/gridHelpers'
+import { checkDistance, generateGridArray } from '../utils/gridHelpers'
 
 export const wordSlice = createSlice({
   name: 'word',
@@ -25,10 +25,19 @@ export const wordSlice = createSlice({
         }
         // if letter is clicked but is not last letter, do nothing
       } else {
-        // if letter isn't clicked, add to current word
-        state.letters.splice(letter.position, 1, {...letter, clicked: true})
-        state.currentWord += letter.letter
-        state.currentWordIndexes.push(letter.position)
+        // if letter isn't clicked and is in valid range, add to current word
+        if (!state.currentWord) {
+          state.letters.splice(letter.position, 1, {...letter, clicked: true})
+          state.currentWord += letter.letter
+          state.currentWordIndexes.push(letter.position)
+        } else {
+          const oldLetter = state.letters[state.currentWordIndexes[state.currentWordIndexes.length - 1]]
+          // if (checkDistance(oldLetter, letter)) {}
+          console.log(checkDistance(oldLetter, letter))
+          state.letters.splice(letter.position, 1, {...letter, clicked: true})
+          state.currentWord += letter.letter
+          state.currentWordIndexes.push(letter.position)
+        }
       }
     }
   }

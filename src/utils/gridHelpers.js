@@ -20,3 +20,15 @@ export const generateGridArray = () => {
     }
     return arr
 }
+
+export const checkDistance = (last, curr) => {
+    // this solution returns the same letter as valid
+    // only works for letters in columns 2 & 4
+    const isOneAbove = (curr.row === last.row - 1) && curr.column === last.column
+    const isValidRow = (curr.row === last.row + 1) || curr.row === last.row
+    const isValidCol = (curr.column >= last.column - 1) && (curr.column <= last.column + 1)
+
+    console.log(`(${curr.row}, ${curr.column})  (${last.row}, ${last.column})`)
+
+    return isOneAbove || (isValidRow && isValidCol)
+}
