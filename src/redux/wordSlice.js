@@ -16,27 +16,29 @@ export const wordSlice = createSlice({
     },
     toggleLetter: (state, action) => {
       const letter = action.payload
+      // check if letter is already clicked
       if (letter.clicked) {
-        // if letter is clicked AND is last letter in current word, remove from current word
+        // if last letter in current word, remove from current word
+        // if letter is clicked but is not last letter, do nothing
         if (state.currentWordIndexes[state.currentWordIndexes.length - 1] === letter.position) {
           state.currentWordIndexes.pop()
           state.currentWord = state.currentWord.substring(0, state.currentWord.length - 1)
           state.letters.splice(letter.position, 1, {...letter, clicked: false})
         }
-        // if letter is clicked but is not last letter, do nothing
       } else {
-        // if letter isn't clicked and is in valid range, add to current word
         if (!state.currentWord) {
+          // if letter is first one clicked, add to current word
           state.letters.splice(letter.position, 1, {...letter, clicked: true})
           state.currentWord += letter.letter
           state.currentWordIndexes.push(letter.position)
         } else {
+          // if letter is in valid range, add to current word
           const oldLetter = state.letters[state.currentWordIndexes[state.currentWordIndexes.length - 1]]
-          // if (checkDistance(oldLetter, letter)) {}
-          console.log(checkDistance(oldLetter, letter))
-          state.letters.splice(letter.position, 1, {...letter, clicked: true})
-          state.currentWord += letter.letter
-          state.currentWordIndexes.push(letter.position)
+          if (checkDistance(oldLetter, letter)) {
+            state.letters.splice(letter.position, 1, {...letter, clicked: true})
+            state.currentWord += letter.letter
+            state.currentWordIndexes.push(letter.position)
+          }
         }
       }
     }
