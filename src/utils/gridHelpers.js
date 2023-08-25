@@ -36,3 +36,11 @@ export const checkDistance = (last, curr) => {
 
     return last.column % 2 === 0 ? isOneAbove || (isValidRowEven && isValidCol) : isOneBelow || (isValidRowOdd && isValidCol)
 }
+
+export const deleteBottomRow = (letters) => {
+    // for loop, starting at row 5 & descending
+    // if not row1 & col3 or row 2 & col 1,2,4,5 :
+    //   update letter to be equal to the letter from the row above
+    // else
+    //   update letter to be a random new letter
+}

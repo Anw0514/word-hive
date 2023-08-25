@@ -42,6 +42,13 @@ export const wordSlice = createSlice({
         }
       }
     },
+    removeLastLetter: state => {
+      if (state.currentWord) {
+        const letter = state.letters[state.currentWordIndexes.pop()]
+        state.letters.splice(letter.position, 1, {...letter, clicked: false})
+        state.currentWord = state.currentWord.substring(0, state.currentWord.length - 1)
+      }
+    },
     replaceLettersAndClearWord: state => {
       state.letters = state.letters.map(letter => ({
         ...letter, 
@@ -54,6 +61,6 @@ export const wordSlice = createSlice({
   }
 })
 
-export const { clearWord, toggleLetter, replaceLettersAndClearWord } = wordSlice.actions
+export const { clearWord, toggleLetter, replaceLettersAndClearWord, removeLastLetter } = wordSlice.actions
 
 export default wordSlice.reducer

@@ -8,6 +8,7 @@ import SubmitButton from "./SubmitButton";
 import Heading from "./Heading";
 import ErrorPopup from "./ErrorPopup";
 import { updateIsHorizontal } from "../redux/appSlice";
+import { removeLastLetter } from "../redux/wordSlice";
 
 const theme = {
   dark: "#140001",
@@ -51,10 +52,17 @@ function App() {
 
   useEffect(() => {
     const handleResize = () => dispatch(updateIsHorizontal())
+    const handleBackspace = (e) => {
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        dispatch(removeLastLetter())
+      }
+    }
+    window.addEventListener('keydown', handleBackspace)
     window.addEventListener('resize', handleResize)
     handleResize()
   
     return () => {
+      window.removeEventListener('keydown', handleBackspace)
       window.removeEventListener('resize', handleResize)
     };
   }, [dispatch])
