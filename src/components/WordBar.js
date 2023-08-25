@@ -6,7 +6,6 @@ import { clearWord } from '../redux/wordSlice'
 const StyledWordBar = styled.div`
     border: 3px solid ${props => props.theme.secondary};
     border-radius: 4px;
-    line-height:1.2em;
     min-height: 1.35em;
     margin: ${props => props.horizontal ? '0px' : '20px'} auto 20px;
     width: 80%;
@@ -15,7 +14,11 @@ const StyledWordBar = styled.div`
     font-size: ${props => props.horizontal ? '5.5vw' : '11vw'};
     position: relative;
 `
-
+const StyledWord = styled.div`
+    overflow: hidden;
+    line-height:1.2em;
+    text-overflow: ellipsis;
+`
 const StyledLine = styled.line`
     stroke: ${props => props.theme.primary};
     stroke-width: 2;
@@ -42,7 +45,9 @@ export default function WordBar() {
     
     return (
         <StyledWordBar horizontal={isHorizontal}>
-            {currentWord}
+            <StyledWord>
+                {currentWord}
+            </StyledWord>
             <StyledSvg onClick={handleClick} height="10" width="10">
                 <StyledLine x1="0" y1="0" x2="10" y2="10" />
                 <StyledLine x1="0" y1="10" x2="10" y2="0" />
