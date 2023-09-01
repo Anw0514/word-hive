@@ -1,4 +1,4 @@
-export const alphabetByFrequency = [
+const alphabetByFrequency = [
     ["E", 110],
     ["S", 87],
     ["I", 86],
@@ -27,17 +27,15 @@ export const alphabetByFrequency = [
     ["Q", 2],
 ]
 
-export const totalFrequency = alphabetByFrequency.reduce((a, b) => a + b[1], 0)
+const totalFrequency = alphabetByFrequency.reduce((a, b) => a + b[1], 0)
 
 export const randomLetter = () => {
     let currentNum = Math.ceil(Math.random() * totalFrequency)
-    console.log('Random Number: ', currentNum)
     let currentLetter = ''
     alphabetByFrequency.every(([char, freq]) => {
         currentLetter = char // set current Letter so we have it after break
         currentNum -= freq // subtract frequency from random number
         return currentNum > 0 // if we've hit 0, will break out of loop
     })
-    console.log('Letter: ', currentLetter)
     return currentLetter
 }

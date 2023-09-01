@@ -1,8 +1,4 @@
-import { totalFrequency, randomLetter } from './letterHelpers'
-
-// export const randomLetter = () => {
-//     return alphabet[Math.floor(Math.random() * alphabet.length)]
-// }
+import { randomLetter } from './letterHelpers'
 
 export const generateGridArray = () => {
     const arr = []
@@ -23,7 +19,6 @@ export const generateGridArray = () => {
 
         }
     }
-    console.log(totalFrequency)
     return arr
 }
 
