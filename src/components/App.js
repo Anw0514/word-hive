@@ -56,6 +56,9 @@ function App() {
       if (e.key === 'Backspace' || e.key === 'Delete') {
         dispatch(removeLastLetter())
       }
+      if (e.key === 'Enter') {
+        // TODO: figure out async redux to submit on enter in a DRY way
+      }
     }
     window.addEventListener('keydown', handleBackspace)
     window.addEventListener('resize', handleResize)

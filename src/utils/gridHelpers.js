@@ -1,8 +1,8 @@
-const alphabet = 'EEEEAAAARIIIIOOOOTNSLCUUUUDPMHGBFYWKVXZJQ'; // in order of most common to least common
+import { totalFrequency, randomLetter } from './letterHelpers'
 
-export const randomLetter = () => {
-    return alphabet[Math.floor(Math.random() * alphabet.length)]
-}
+// export const randomLetter = () => {
+//     return alphabet[Math.floor(Math.random() * alphabet.length)]
+// }
 
 export const generateGridArray = () => {
     const arr = []
@@ -23,11 +23,12 @@ export const generateGridArray = () => {
 
         }
     }
+    console.log(totalFrequency)
     return arr
 }
 
 export const checkDistance = (last, curr) => {
-    // this solution returns the same letter as valid
+    // this solution returns the same letter as a valid distance
     const isOneAbove = (curr.row === last.row - 1) && curr.column === last.column
     const isOneBelow = (curr.row === last.row + 1) && curr.column === last.column
     const isValidRowEven = (curr.row === last.row + 1) || curr.row === last.row
@@ -39,7 +40,7 @@ export const checkDistance = (last, curr) => {
 
 export const deleteBottomRow = (letters) => {
     // for loop, starting at row 5 & descending
-    // if not row1 & col3 or row 2 & col 1,2,4,5 :
+    // if not row 1 & col 1,5 or row 2 & col 1,2,4,5 :
     //   update letter to be equal to the letter from the row above
     // else
     //   update letter to be a random new letter

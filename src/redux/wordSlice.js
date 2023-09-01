@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { checkDistance, generateGridArray, randomLetter } from '../utils/gridHelpers'
+import { checkDistance, generateGridArray } from '../utils/gridHelpers'
+import { randomLetter } from '../utils/letterHelpers'
 
 export const wordSlice = createSlice({
   name: 'word',
