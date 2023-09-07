@@ -8,7 +8,8 @@ import SubmitButton from "./SubmitButton";
 import Heading from "./Heading";
 import ErrorPopup from "./ErrorPopup";
 import { updateIsHorizontal } from "../redux/appSlice";
-import { removeLastLetter } from "../redux/wordSlice";
+import { removeLastLetter, submitWord, wordTooShort } from "../redux/wordSlice";
+import { current } from "@reduxjs/toolkit";
 
 const theme = {
   dark: "#140001",
@@ -49,6 +50,7 @@ const StyledControls = styled.div`
 function App() {
   const dispatch = useDispatch()
   const isHorizontal = useSelector(state => state.app.isHorizontal)
+  const currentWord = useSelector(state => state.word.currentWord)
 
   useEffect(() => {
     const handleResize = () => dispatch(updateIsHorizontal())
@@ -57,7 +59,11 @@ function App() {
         dispatch(removeLastLetter())
       }
       if (e.key === 'Enter') {
-        // TODO: figure out async redux to submit on enter in a DRY way
+        if (currentWord && currentWord.length > 2) {
+            dispatch(submitWord(currentWord))
+        } else {
+            dispatch(wordTooShort())
+        }
       }
     }
     window.addEventListener('keydown', handleBackspace)
@@ -68,7 +74,7 @@ function App() {
       window.removeEventListener('keydown', handleBackspace)
       window.removeEventListener('resize', handleResize)
     };
-  }, [dispatch])
+  }, [dispatch, currentWord])
 
   return (
     <ThemeProvider theme={theme}>

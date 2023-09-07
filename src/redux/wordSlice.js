@@ -82,7 +82,7 @@ export const wordSlice = createSlice({
         // loading state
       })
       .addCase(submitWord.rejected, (state, action) => {
-        state.errorMessage = 'Something went wrong.'
+        state.errorMessage = 'Invalid word. Try again.'
         state.errorVisible = true
       })
       .addCase(submitWord.fulfilled, (state, action) => {
