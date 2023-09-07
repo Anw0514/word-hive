@@ -3,17 +3,25 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { setHighScore } from '../redux/wordSlice'
 
+const StyledScoresContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0px auto 5px;
+`
+
 const StyledScoreContainer = styled.div`
-    text-align: right;
-    color: ${props => props.theme.primary};
-    opacity: .7;
+    text-align: ${props => props.$left ? 'left' : 'right'};
+    color: ${props => props.theme.primaryAlt};
+    opacity: ${props => props.$left ? '.7' : '1'};
     width: ${props => props.$horizontal ? '80%' : '90%'};
-    margin-bottom: 5px;
-    font-size: 1.3em;
+    font-size: ${props => props.$left ? '1em' : '2em'};
     line-height: .7em;
 
     div {
-        font-size: .4em;
+        font-size: .3em;
     }
 `
 export default function ScoreContainer() {
@@ -36,9 +44,14 @@ export default function ScoreContainer() {
     }, [dispatch, score, highScore])
 
     return (
-        <StyledScoreContainer $horizontal={isHorizontal}>
-            {score}
-            <div>Current Score</div>
-        </StyledScoreContainer>
+        <StyledScoresContainer>
+            <StyledScoreContainer $left $horizontal={isHorizontal}>
+                {highScore}
+                <div>High Score</div>
+            </StyledScoreContainer>
+            <StyledScoreContainer $horizontal={isHorizontal}>
+                {score}
+            </StyledScoreContainer>
+        </StyledScoresContainer>
     )
 }

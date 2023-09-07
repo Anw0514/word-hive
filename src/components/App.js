@@ -14,6 +14,7 @@ const theme = {
   dark: "#140001",
   light: "#CDD3E0",
   primary: "#F3C33F",
+  primaryAlt: "#f4a81c",
   secondary: "#564110",
   success: "#7CB441",
   successAlt: "#6ca62e",

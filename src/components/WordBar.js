@@ -20,7 +20,7 @@ const StyledWord = styled.div`
     text-overflow: ellipsis;
 `
 const StyledLine = styled.line`
-    stroke: ${props => props.theme.primary};
+    stroke: ${props => props.theme.primaryAlt};
     stroke-width: 2;
 `
 const StyledSvg = styled.svg`
