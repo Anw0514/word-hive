@@ -17,11 +17,12 @@ const StyledScoreContainer = styled.div`
     color: ${props => props.theme.primaryAlt};
     opacity: ${props => props.$left ? '.7' : '1'};
     width: ${props => props.$horizontal ? '80%' : '90%'};
-    font-size: ${props => props.$left ? '1em' : '2em'};
+    font-size: ${props => props.$left ? '1.1em' : '2em'};
     line-height: .7em;
 
     div {
-        font-size: .3em;
+        font-size: .2em;
+        margin-bottom: -3px;
     }
 `
 export default function ScoreContainer() {
