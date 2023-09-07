@@ -39,3 +39,9 @@ export const deleteBottomRow = (letters) => {
     // else
     //   update letter to be a random new letter
 }
+
+export const calculateScore = (letterCount, multiplier = 1) => {
+    // function for score slope comes out as 10, 15, 30, 55, 90, 135, 190
+    const baseScore = (((letterCount-1 )**2 )/2 )+1
+    return multiplier * Math.round(baseScore * 10)
+}

@@ -9,7 +9,6 @@ import Heading from "./Heading";
 import ErrorPopup from "./ErrorPopup";
 import { updateIsHorizontal } from "../redux/appSlice";
 import { removeLastLetter, submitWord, wordTooShort } from "../redux/wordSlice";
-import { current } from "@reduxjs/toolkit";
 
 const theme = {
   dark: "#140001",
@@ -59,7 +58,7 @@ function App() {
         dispatch(removeLastLetter())
       }
       if (e.key === 'Enter') {
-        if (currentWord && currentWord.length > 2) {
+        if (currentWord && currentWord.length > 1) {
             dispatch(submitWord(currentWord))
         } else {
             dispatch(wordTooShort())

@@ -21,7 +21,7 @@ export default function SubmitButton() {
     const currentWord = useSelector(state => state.word.currentWord)
 
     const handleSubmit = () => {
-        if (currentWord && currentWord.length > 2) {
+        if (currentWord && currentWord.length > 1) {
             dispatch(submitWord(currentWord))
         } else {
             dispatch(wordTooShort())

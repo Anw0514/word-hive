@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { checkDistance, generateGridArray } from '../utils/gridHelpers'
-import { randomLetter, url } from '../utils/letterHelpers'
+import { calculateScore, checkDistance, generateGridArray } from '../utils/gridHelpers'
+import { randomLetter } from '../utils/letterHelpers'
+
+const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
 export const submitWord = createAsyncThunk('word/submitWord', async (currentWord) => {
   const word = await axios(url + currentWord)
@@ -69,7 +71,7 @@ export const wordSlice = createSlice({
       state.currentWordIndexes = []
     },
     wordTooShort: state => {
-      state.errorMessage = 'Invalid word. Must be 3 or more characters.'
+      state.errorMessage = 'Invalid word. Must be 2 or more characters.'
       state.errorVisible = true
     },
     clearError: state => {
@@ -86,6 +88,7 @@ export const wordSlice = createSlice({
         state.errorVisible = true
       })
       .addCase(submitWord.fulfilled, (state, action) => {
+        state.score += calculateScore(state.currentWord.length)
         state.letters = state.letters.map(letter => ({
           ...letter, 
           clicked: false, 

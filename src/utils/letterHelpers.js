@@ -39,5 +39,3 @@ export const randomLetter = () => {
     })
     return currentLetter
 }
-
-export const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
