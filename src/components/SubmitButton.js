@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { replaceLettersAndClearWord } from '../redux/wordSlice'
-import { wordInvalid, wordTooShort } from '../redux/appSlice'
+import { submitWord, wordTooShort  } from '../redux/wordSlice'
 
 const StyledButton = styled.button`
     background-color: ${props => props.theme.success};
@@ -17,28 +16,13 @@ const StyledButtonContainer = styled.div`
     text-align: center;
 `
 
-const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
-
 export default function SubmitButton() {
     const dispatch = useDispatch()
     const currentWord = useSelector(state => state.word.currentWord)
 
     const handleSubmit = () => {
         if (currentWord && currentWord.length > 2) {
-            fetch(url + currentWord)
-                .then(resp => {
-                    if (resp.ok) {
-                        return resp.json()
-                    }
-                    dispatch(wordInvalid())
-                    throw resp
-                })
-                .then(res => {
-                    if (res[0].word) {
-                        dispatch(replaceLettersAndClearWord())
-                    }
-                })
-                .catch(error => console.log(error))
+            dispatch(submitWord(currentWord))
         } else {
             dispatch(wordTooShort())
         }

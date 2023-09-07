@@ -1,7 +1,7 @@
 const alphabetByFrequency = [
-    ["E", 110],
+    ["E", 95],
     ["S", 87],
-    ["I", 86],
+    ["I", 83],
     ["A", 78],
     ["R", 73],
     ["N", 72],
@@ -33,9 +33,11 @@ export const randomLetter = () => {
     let currentNum = Math.ceil(Math.random() * totalFrequency)
     let currentLetter = ''
     alphabetByFrequency.every(([char, freq]) => {
-        currentLetter = char // set current Letter so we have it after break
+        currentLetter = char // set current Letter so we have it after loop break
         currentNum -= freq // subtract frequency from random number
         return currentNum > 0 // if we've hit 0, will break out of loop
     })
     return currentLetter
 }
+
+export const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'

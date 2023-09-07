@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { checkDistance, generateGridArray } from '../utils/gridHelpers'
-import { randomLetter } from '../utils/letterHelpers'
+import { randomLetter, url } from '../utils/letterHelpers'
+
+export const submitWord = createAsyncThunk('word/submitWord', async (currentWord) => {
+  const word = await fetch(url + currentWord)
+  return word.json()
+})
 
 export const wordSlice = createSlice({
   name: 'word',
@@ -8,6 +13,9 @@ export const wordSlice = createSlice({
     letters: generateGridArray(),
     currentWord: '',
     currentWordIndexes: [],
+    errorMessage: '',
+    errorVisible: false,
+    score: 0
   },
   reducers: {
     clearWord: state => {
@@ -58,10 +66,47 @@ export const wordSlice = createSlice({
       }))
       state.currentWord = ''
       state.currentWordIndexes = []
+    },
+    wordTooShort: state => {
+      state.errorMessage = 'Invalid word. Must be 3 or more characters.'
+      state.errorVisible = true
+    },
+    clearError: state => {
+      state.errorVisible = false
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(submitWord.rejected, (state, action) => {
+        state.errorMessage = 'Something went wrong.'
+        state.errorVisible = true
+      })
+      .addCase(submitWord.fulfilled, (state, action) => {
+        console.log(action.payload)
+        if (action.payload[0]) {
+          state.letters = state.letters.map(letter => ({
+            ...letter, 
+            clicked: false, 
+            letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
+          }))
+          state.currentWord = ''
+          state.currentWordIndexes = []
+        } else {
+          state.errorMessage = 'Invalid word.'
+          state.errorVisible = true
+        }
+      })
   }
 })
 
-export const { clearWord, toggleLetter, replaceLettersAndClearWord, removeLastLetter } = wordSlice.actions
+export const { 
+  clearWord, 
+  toggleLetter, 
+  replaceLettersAndClearWord, 
+  removeLastLetter,
+  wordTooShort,
+  wordInvalid,
+  clearError
+} = wordSlice.actions
 
 export default wordSlice.reducer

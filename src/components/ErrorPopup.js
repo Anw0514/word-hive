@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearError } from '../redux/appSlice'
+import { clearError } from '../redux/wordSlice'
 
 const StyledError = styled.div`
     border: 1px solid ${props => props.theme.failure};
@@ -18,8 +18,8 @@ const StyledError = styled.div`
 
 export default function ErrorPopup() {
     const dispatch = useDispatch()
-    const errorMessage = useSelector(state => state.app.errorMessage)
-    const errorVisible = useSelector(state => state.app.errorVisible)
+    const errorMessage = useSelector(state => state.word.errorMessage)
+    const errorVisible = useSelector(state => state.word.errorVisible)
 
     useEffect(() => {
         if (errorVisible) {

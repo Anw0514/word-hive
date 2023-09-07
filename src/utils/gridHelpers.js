@@ -2,7 +2,6 @@ import { randomLetter } from './letterHelpers'
 
 export const generateGridArray = () => {
     const arr = []
-    // TODO: implement mitchel's idea for weighted letters
     for (let i = 1; i < 6; i++) {
         for (let j = 1; j < 6; j++) {
             let letter = randomLetter()
