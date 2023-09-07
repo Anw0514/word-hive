@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setHighScore } from '../redux/wordSlice'
 
 const StyledScoreContainer = styled.div`
     text-align: right;
@@ -16,8 +17,24 @@ const StyledScoreContainer = styled.div`
     }
 `
 export default function ScoreContainer() {
+    const dispatch = useDispatch()
     const score = useSelector(state => state.word.score)
+    const highScore = useSelector(state => state.word.highScore)
     const isHorizontal = useSelector(state => state.app.isHorizontal)
+
+    useEffect(() => {
+        const localHighScore = localStorage.getItem("highScore")
+        if (localHighScore) {
+            dispatch(setHighScore(localHighScore))
+        }
+    }, [dispatch])
+
+    useEffect(() => {
+        if (score > highScore) {
+            dispatch(setHighScore(score))
+        }
+    }, [dispatch, score, highScore])
+
     return (
         <StyledScoreContainer $horizontal={isHorizontal}>
             {score}

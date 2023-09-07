@@ -18,7 +18,8 @@ export const wordSlice = createSlice({
     currentWordIndexes: [],
     errorMessage: '',
     errorVisible: false,
-    score: 0
+    score: 0,
+    highScore: 0
   },
   reducers: {
     clearWord: state => {
@@ -76,6 +77,10 @@ export const wordSlice = createSlice({
     },
     clearError: state => {
       state.errorVisible = false
+    },
+    setHighScore: (state, action) => {
+      state.highScore = action.payload
+      localStorage.setItem("highScore", action.payload)
     }
   },
   extraReducers: builder => {
@@ -107,7 +112,8 @@ export const {
   removeLastLetter,
   wordTooShort,
   wordInvalid,
-  clearError
+  clearError,
+  setHighScore
 } = wordSlice.actions
 
 export default wordSlice.reducer
