@@ -33,7 +33,7 @@ const StyledApp = styled.div`
 const StyledFlexContainer = styled.div`
   display: flex;
   min-width: 100%;
-  flex-direction: ${props => props.horizontal ? 'row' : 'column'};
+  flex-direction: ${props => props.$horizontal ? 'row' : 'column'};
   justify-content: center;
   text-align: center;
 `
@@ -73,7 +73,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        <StyledFlexContainer horizontal={isHorizontal}>
+        <StyledFlexContainer $horizontal={isHorizontal}>
           { !isHorizontal && <Heading /> }
           { !isHorizontal && <ScoreContainer /> }
           <HexesContainer />

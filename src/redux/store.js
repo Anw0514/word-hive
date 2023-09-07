@@ -6,5 +6,12 @@ export default configureStore({
   reducer: {
     app: appReducer,
     word: wordReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ["word/submitWord/fulfilled"],
+      },
+    }),
 })

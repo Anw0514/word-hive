@@ -10,7 +10,7 @@ const StyledHex = styled.div`
 	--w: calc(var(--r-1) * 80% / 5 - 2 * var(--r-1) * var(--g));
     display: block;
 	clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-	background: ${props => props.shown ? props.theme.primary : 'none'};
+	background: ${props => props.$shown ? props.theme.primary : 'none'};
 	width: var(--w);
 	height: calc(0.8658 * var(--w));
 	margin: var(--g) calc(var(--r) / -2 * var(--w) + var(--g));
@@ -45,10 +45,10 @@ const StyledHex = styled.div`
 
 const StyledInnerHex = styled.div`
     clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    font-size: ${props => props.horizontal ? '5.5vw' : '10vw'};
+    font-size: ${props => props.$horizontal ? '5.5vw' : '10vw'};
     line-height: 1.45em;
-    background-color: ${props => props.clicked ? props.theme.dark : props.theme.primary};
-    color: ${props => props.clicked ? props.theme.primary : props.theme.secondary};
+    background-color: ${props => props.$clicked ? props.theme.dark : props.theme.primary};
+    color: ${props => props.$clicked ? props.theme.primary : props.theme.secondary};
     width: 100%;
     transition: all 0.1s linear;
 `
@@ -63,11 +63,10 @@ export default function Hex({ letterObj }) {
 
     return (
         <StyledHex 
-            shown={!!letterObj.letter} 
-            horizontal={isHorizontal}
+            $shown={!!letterObj.letter} 
             onClick={handleClick}
         >
-            <StyledInnerHex horizontal={isHorizontal} clicked={letterObj.clicked}>
+            <StyledInnerHex $horizontal={isHorizontal} $clicked={letterObj.clicked}>
                 {letterObj.letter}
             </StyledInnerHex>
         </StyledHex>

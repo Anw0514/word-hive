@@ -7,11 +7,11 @@ const StyledWordBar = styled.div`
     border: 3px solid ${props => props.theme.secondary};
     border-radius: 4px;
     min-height: 1.35em;
-    margin: ${props => props.horizontal ? '0px' : '20px'} auto 20px;
+    margin: ${props => props.$horizontal ? '0px' : '20px'} auto 20px;
     width: 80%;
     text-align: center;
     box-sizing: border-box;
-    font-size: ${props => props.horizontal ? '5.5vw' : '11vw'};
+    font-size: ${props => props.$horizontal ? '5.5vw' : '11vw'};
     position: relative;
 `
 const StyledWord = styled.div`
@@ -44,7 +44,7 @@ export default function WordBar() {
     }
     
     return (
-        <StyledWordBar horizontal={isHorizontal}>
+        <StyledWordBar $horizontal={isHorizontal}>
             <StyledWord>
                 {currentWord}
             </StyledWord>

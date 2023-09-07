@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { checkDistance, generateGridArray } from '../utils/gridHelpers'
 import { randomLetter, url } from '../utils/letterHelpers'
 
 export const submitWord = createAsyncThunk('word/submitWord', async (currentWord) => {
-  const word = await fetch(url + currentWord)
-  return word.json()
+  const word = await axios(url + currentWord)
+  return word
 })
 
 export const wordSlice = createSlice({
@@ -77,24 +78,21 @@ export const wordSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(submitWord.pending, (state, action) => {
+        // loading state
+      })
       .addCase(submitWord.rejected, (state, action) => {
         state.errorMessage = 'Something went wrong.'
         state.errorVisible = true
       })
       .addCase(submitWord.fulfilled, (state, action) => {
-        console.log(action.payload)
-        if (action.payload[0]) {
-          state.letters = state.letters.map(letter => ({
-            ...letter, 
-            clicked: false, 
-            letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
-          }))
-          state.currentWord = ''
-          state.currentWordIndexes = []
-        } else {
-          state.errorMessage = 'Invalid word.'
-          state.errorVisible = true
-        }
+        state.letters = state.letters.map(letter => ({
+          ...letter, 
+          clicked: false, 
+          letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
+        }))
+        state.currentWord = ''
+        state.currentWordIndexes = []
       })
   }
 })

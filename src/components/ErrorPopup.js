@@ -10,8 +10,8 @@ const StyledError = styled.div`
     color: ${props => props.theme.failure};
     font-size: .8em;
     margin-top: 1em;
-    visibility: ${props => props.visible ? 'visible' : 'hidden'};
-    opacity: ${props => props.visible ? '1' : '0'};
+    visibility: ${props => props.$visible ? 'visible' : 'hidden'};
+    opacity: ${props => props.$visible ? '1' : '0'};
     transition: all 0.2s linear;
     padding: 5px 10px;
 `
@@ -29,6 +29,6 @@ export default function ErrorPopup() {
     }, [errorVisible, dispatch])
 
     return (
-        <StyledError visible={errorVisible}>{errorMessage}</StyledError>
+        <StyledError $visible={errorVisible}>{errorMessage}</StyledError>
     )
 }
