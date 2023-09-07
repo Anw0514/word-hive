@@ -20,7 +20,7 @@ const StyledHex = styled.div`
     align-items: center;
     padding: 4px;
     text-align: center;
-    cursor: pointer;
+    ${props => props.$shown && 'cursor: pointer;'}
 
 	&:hover {
 		z-index: 9;
@@ -58,7 +58,9 @@ export default function Hex({ letterObj }) {
     const isHorizontal = useSelector(state => state.app.isHorizontal)
 
     const handleClick = () => {
-        dispatch(toggleLetter(letterObj))
+        if (letterObj.letter) {
+            dispatch(toggleLetter(letterObj))
+        }
     }
 
     return (
