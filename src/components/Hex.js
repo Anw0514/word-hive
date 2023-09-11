@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleLetter } from '../redux/wordSlice'
 
@@ -21,6 +22,7 @@ const StyledHex = styled.div`
     padding: 4px;
     text-align: center;
     ${props => props.$shown && 'cursor: pointer;'}
+    ${props => props.$evenCol && 'transform: translateY(calc(50% + var(--g)));'}
 
 	&:hover {
 		z-index: 9;
@@ -35,12 +37,32 @@ const StyledHex = styled.div`
 		transform: translate(-50%, -50%);
 	}
 
-    &:nth-child(5n + 2) {
-		transform: translateY(calc(50% + var(--g)));
-	}
-    &:nth-child(5n + 4) {
-		transform: translateY(calc(50% + var(--g)));
-	}
+    &.fade-enter {
+        opacity: 0;
+        transform: ${props => props.$evenCol ? 'translateY(calc(-50% + var(--g)))' : 'translateY(-100%)'};
+    }
+
+    &.fade-enter-active {
+        opacity: 1;
+        transform: ${props => props.$evenCol ? 'translateY(calc(50% + var(--g)))' : 'translateY(0%)'};
+    }
+
+    &.fade-exit {
+        opacity: 1;
+        transform: ${props => props.$evenCol ? 'translateY(calc(50% + var(--g)))' : 'translateY(0%)'};
+    }
+
+    &.fade-exit-active {
+        opacity: 0;
+        transform: ${props => props.$evenCol ? 'translateY(calc(150% + var(--g)))' : 'translateY(100%)'};
+    }
+
+    &.fade-enter-active {
+        transition: opacity 100ms, transform 500ms;
+    }
+    &.fade-exit-active {
+        transition: opacity 500ms, transform 500ms;
+    }
 `
 
 const StyledInnerHex = styled.div`
@@ -56,6 +78,7 @@ const StyledInnerHex = styled.div`
 export default function Hex({ letterObj }) {
     const dispatch = useDispatch()
     const isHorizontal = useSelector(state => state.app.isHorizontal)
+    const nodeRef = React.useRef(null);
 
     const handleClick = () => {
         if (letterObj.letter) {
@@ -64,13 +87,26 @@ export default function Hex({ letterObj }) {
     }
 
     return (
-        <StyledHex 
-            $shown={!!letterObj.letter} 
-            onClick={handleClick}
-        >
-            <StyledInnerHex $horizontal={isHorizontal} $clicked={letterObj.clicked}>
-                {letterObj.letter}
-            </StyledInnerHex>
-        </StyledHex>
+        <SwitchTransition mode="out-in">
+            <CSSTransition
+                key={letterObj.letter}
+                nodeRef={nodeRef}
+                addEndListener={(done) => {
+                    nodeRef.current.addEventListener("transitionend", done, false);
+                }}
+                classNames="fade"
+            >
+                <StyledHex 
+                    $shown={!!letterObj.letter}
+                    $evenCol={!(letterObj.column % 2)} 
+                    onClick={handleClick}
+                    ref={nodeRef}
+                >
+                    <StyledInnerHex $horizontal={isHorizontal} $clicked={letterObj.clicked}>
+                        {letterObj.letter}
+                    </StyledInnerHex>
+                </StyledHex>
+            </CSSTransition>
+        </SwitchTransition>
     )
 }

@@ -26,7 +26,6 @@ const theme = {
 const StyledApp = styled.div`
   background-color: ${props => props.theme.dark};
   color: ${props => props.theme.primary};
-  min-height: 100vh;
   margin: auto;
   padding: 2em;
 `
