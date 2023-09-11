@@ -9,6 +9,7 @@ export const generateGridArray = () => {
                 letter = ""
             }
             arr.push({
+                id: crypto.randomUUID(),
                 letter,
                 row: i,
                 column: j,
@@ -30,6 +31,11 @@ export const checkDistance = (last, curr) => {
     const isValidCol = (curr.column >= last.column - 1) && (curr.column <= last.column + 1)
 
     return last.column % 2 === 0 ? isOneAbove || (isValidRowEven && isValidCol) : isOneBelow || (isValidRowOdd && isValidCol)
+}
+
+export const isBottomRow = (letterObj) => {
+    const validFourthRow = letterObj.row === 4 && letterObj.column !== 3
+    return letterObj.row === 5 || validFourthRow
 }
 
 export const deleteBottomRow = (letters) => {

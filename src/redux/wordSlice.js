@@ -19,7 +19,8 @@ export const wordSlice = createSlice({
     errorMessage: '',
     errorVisible: false,
     score: 0,
-    highScore: 0
+    highScore: 0,
+    movingDown: false,
   },
   reducers: {
     clearWord: state => {
@@ -62,15 +63,6 @@ export const wordSlice = createSlice({
         state.currentWord = state.currentWord.substring(0, state.currentWord.length - 1)
       }
     },
-    replaceLettersAndClearWord: state => {
-      state.letters = state.letters.map(letter => ({
-        ...letter, 
-        clicked: false, 
-        letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
-      }))
-      state.currentWord = ''
-      state.currentWordIndexes = []
-    },
     wordTooShort: state => {
       state.errorMessage = 'Invalid word. Must be 2 or more characters.'
       state.errorVisible = true
@@ -81,7 +73,12 @@ export const wordSlice = createSlice({
     setHighScore: (state, action) => {
       state.highScore = action.payload
       localStorage.setItem("highScore", action.payload)
-    }
+    },
+    newRow: state => {
+      state.movingDown = true
+      // call deleteBottomRow from ../utils/gridHelpers
+      // update state for new letters, all with new ids
+    },
   },
   extraReducers: builder => {
     builder
@@ -93,10 +90,12 @@ export const wordSlice = createSlice({
         state.errorVisible = true
       })
       .addCase(submitWord.fulfilled, (state, action) => {
+        state.movingDown = false
         state.score += calculateScore(state.currentWord.length)
         state.letters = state.letters.map(letter => ({
           ...letter, 
           clicked: false, 
+          id: state.currentWordIndexes.includes(letter.position) ? crypto.randomUUID() : letter.id,
           letter: state.currentWordIndexes.includes(letter.position) ? randomLetter() : letter.letter
         }))
         state.currentWord = ''
@@ -108,7 +107,6 @@ export const wordSlice = createSlice({
 export const { 
   clearWord, 
   toggleLetter, 
-  replaceLettersAndClearWord, 
   removeLastLetter,
   wordTooShort,
   wordInvalid,

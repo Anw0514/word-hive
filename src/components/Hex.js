@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleLetter } from '../redux/wordSlice'
+import { isBottomRow } from '../utils/gridHelpers';
 
 const StyledHex = styled.div`
     --r: 0.24935;
@@ -39,29 +40,25 @@ const StyledHex = styled.div`
 
     &.fade-enter {
         opacity: 0;
-        transform: ${props => props.$evenCol ? 'translateY(calc(-50% + var(--g)))' : 'translateY(-100%)'};
     }
-
     &.fade-enter-active {
         opacity: 1;
-        transform: ${props => props.$evenCol ? 'translateY(calc(50% + var(--g)))' : 'translateY(0%)'};
     }
 
     &.fade-exit {
         opacity: 1;
-        transform: ${props => props.$evenCol ? 'translateY(calc(50% + var(--g)))' : 'translateY(0%)'};
+        ${props => props.$movingDown && `transform: ${props.$evenCol ? 'translateY(calc(50% + var(--g)))' : 'translateY(0%)'};`}
     }
-
     &.fade-exit-active {
         opacity: 0;
-        transform: ${props => props.$evenCol ? 'translateY(calc(150% + var(--g)))' : 'translateY(100%)'};
+        ${props => props.$movingDown && `transform: ${props.$evenCol ? 'translateY(calc(150% + var(--g)))' : 'translateY(100%)'};`}
     }
 
     &.fade-enter-active {
-        transition: opacity 100ms, transform 500ms;
+        transition: opacity 500ms, transform 500ms;
     }
     &.fade-exit-active {
-        transition: opacity 500ms, transform 500ms;
+        transition: opacity 200ms, transform 500ms;
     }
 `
 
@@ -78,6 +75,7 @@ const StyledInnerHex = styled.div`
 export default function Hex({ letterObj }) {
     const dispatch = useDispatch()
     const isHorizontal = useSelector(state => state.app.isHorizontal)
+    const movingDown = useSelector(state => state.word.movingDown)
     const nodeRef = React.useRef(null);
 
     const handleClick = () => {
@@ -89,16 +87,18 @@ export default function Hex({ letterObj }) {
     return (
         <SwitchTransition mode="out-in">
             <CSSTransition
-                key={letterObj.letter}
-                nodeRef={nodeRef}
+                key={letterObj.id} // this is what triggers the transition animation
+                nodeRef={nodeRef} // the element to put the transition on
                 addEndListener={(done) => {
                     nodeRef.current.addEventListener("transitionend", done, false);
                 }}
-                classNames="fade"
+                classNames="fade" // the base classname that dictates the animation
             >
                 <StyledHex 
                     $shown={!!letterObj.letter}
-                    $evenCol={!(letterObj.column % 2)} 
+                    $evenCol={!(letterObj.column % 2)}
+                    $bottomRow={isBottomRow(letterObj)} 
+                    $movingDown={movingDown}
                     onClick={handleClick}
                     ref={nodeRef}
                 >
