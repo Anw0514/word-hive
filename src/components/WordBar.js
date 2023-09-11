@@ -24,16 +24,26 @@ const StyledLine = styled.line`
     stroke-width: 2;
 `
 const StyledSvg = styled.svg`
-    position: absolute;
-    top: 10px;
-    right: 10px;
     cursor: pointer;
     opacity: .7;
+`
+
+const StyledClearButton = styled.button`
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: none;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 10px;
 
     &:hover {
-        opacity: 1;
+        svg {
+            opacity: 1;
+        }
     }
 `
+
 export default function WordBar() {
     const dispatch = useDispatch()
     const isHorizontal = useSelector(state => state.app.isHorizontal)
@@ -48,10 +58,12 @@ export default function WordBar() {
             <StyledWord>
                 {currentWord}
             </StyledWord>
-            <StyledSvg onClick={handleClick} height="10" width="10">
-                <StyledLine x1="0" y1="0" x2="10" y2="10" />
-                <StyledLine x1="0" y1="10" x2="10" y2="0" />
-            </StyledSvg>
+            <StyledClearButton onClick={handleClick} >
+                <StyledSvg height="10" width="10">
+                    <StyledLine x1="0" y1="0" x2="10" y2="10" />
+                    <StyledLine x1="0" y1="10" x2="10" y2="0" />
+                </StyledSvg>
+            </StyledClearButton>
         </StyledWordBar>
     )
 }
