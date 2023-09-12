@@ -6,6 +6,7 @@ import { submitWord, wordTooShort  } from '../redux/wordSlice'
 const StyledButton = styled.button`
     background-color: ${props => props.theme.success};
     color: ${props => props.theme.dark};
+    padding: .5em 2em;
 
     &:active {
         background-color: ${props => props.theme.successAlt}

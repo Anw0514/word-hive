@@ -58,7 +58,7 @@ const StyledHex = styled.div`
         transition: opacity 500ms, transform 500ms;
     }
     &.fade-exit-active {
-        transition: opacity 200ms, transform 500ms;
+        transition: opacity 10ms, transform 500ms;
     }
 `
 

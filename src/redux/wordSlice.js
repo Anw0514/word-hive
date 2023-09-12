@@ -20,7 +20,7 @@ export const wordSlice = createSlice({
     errorVisible: false,
     score: 0,
     highScore: 0,
-    movingDown: false,
+    movingDown: true,
   },
   reducers: {
     clearWord: state => {
@@ -75,22 +75,28 @@ export const wordSlice = createSlice({
       localStorage.setItem("highScore", action.payload)
     },
     newRow: state => {
-      state.movingDown = true
       // call deleteBottomRow from ../utils/gridHelpers
       // update state for new letters, all with new ids
     },
+    endGame: state => {
+      state.letters = generateGridArray()
+      state.score = 0
+      state.currentWord = ''
+      state.currentWordIndexes = []
+    }
   },
   extraReducers: builder => {
     builder
       .addCase(submitWord.pending, (state, action) => {
         // loading state
+        state.movingDown = false
       })
       .addCase(submitWord.rejected, (state, action) => {
         state.errorMessage = 'Invalid word. Try again.'
         state.errorVisible = true
+        state.movingDown = true
       })
       .addCase(submitWord.fulfilled, (state, action) => {
-        state.movingDown = false
         state.score += calculateScore(state.currentWord.length)
         state.letters = state.letters.map(letter => ({
           ...letter, 
@@ -100,6 +106,7 @@ export const wordSlice = createSlice({
         }))
         state.currentWord = ''
         state.currentWordIndexes = []
+        state.movingDown = true
       })
   }
 })
@@ -111,7 +118,9 @@ export const {
   wordTooShort,
   wordInvalid,
   clearError,
-  setHighScore
+  setHighScore,
+  newRow,
+  endGame,
 } = wordSlice.actions
 
 export default wordSlice.reducer

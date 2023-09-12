@@ -9,6 +9,7 @@ import Heading from "./Heading";
 import ErrorPopup from "./ErrorPopup";
 import { updateIsHorizontal } from "../redux/appSlice";
 import { removeLastLetter, submitWord, wordTooShort } from "../redux/wordSlice";
+import GameButtons from "./GameButtons";
 
 const theme = {
   dark: "#140001",
@@ -88,11 +89,13 @@ function App() {
               <ScoreContainer />
               <WordBar />
               <SubmitButton />
+              <GameButtons />
               <ErrorPopup />
             </StyledControls>
           }
           { !isHorizontal && <WordBar /> }
           { !isHorizontal && <SubmitButton /> }
+          { !isHorizontal && <GameButtons /> }
           { !isHorizontal && <ErrorPopup /> }
         </StyledFlexContainer>
       </StyledApp>
